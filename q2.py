@@ -126,11 +126,11 @@ for i in range(n_sections):
         fanning = 0.046*reynolds**(-0.2)
     else :
         fanning = 16/reynolds
-    fanning = ((1-e_void)/e_void**3)*(1.75+((150*(1-e_void))/reynolds))
+    fanning = ((1-e_void)/e_void**3)*(1.75+((150*(1-e_void))/reynolds))#equation 11.5.1-13
     G = Q/rho_g/A_reactor
-    fanning2 = ((1-e_void)**2/e_void**3) * (150/((dp*G)/(2.5*10**(-5))))
-    fanning3 = ((1-e_void)/e_void**3)*(1.24+((368*(1-e_void))/reynolds))
-    dP = (-dz) * fanning3 * rho_g * (u_s)**2 / dp
+    fanning2 = ((1-e_void)**2/e_void**3) * (150/((dp*G)/(2.5*10**(-5))))#equation 11.5.1-11
+    fanning3 = ((1-e_void)/e_void**3)*(1.24+((368*(1-e_void))/reynolds))#equation 11.5.1-13 version handley and heggs
+    dP = (-dz) * fanning * rho_g * (u_s)**2 / dp
     pressure[i+1] = pressure[i] + dP
     print(fanning,fanning2,fanning3)
 # Afficher les concentrations des espèces en fonction de la longueur du réacteur
@@ -150,7 +150,7 @@ plt.show()
 conversion_CO = ((concentrations['CO'][0]-concentrations['CO'][-1])/concentrations['CO'][0])
 print("Conversion rate of CO = ",conversion_CO*100,"%")
 
-plt.plot(longueur, temperatures, label='Température (K)', color='black')
+plt.plot(longueur, temperatures, label='Temperature (K)')
 
 # Configurer le graphique
 plt.xlabel('Lenght of reactor (m)')
@@ -162,7 +162,7 @@ plt.show()
 #Conversion des pressions en bar
 for i in range(len(pressure)):
     pressure[i] = pressure[i]/101325
-plt.plot(longueur, pressure, label='Pressure (atm)', color='black')
+plt.plot(longueur, pressure, label='Pressure (atm)')
 
 # Configurer le graphique
 plt.xlabel('Lenght of reactor (m)')
@@ -170,7 +170,7 @@ plt.ylabel('Pressure [atm]')
 plt.title('Pressure along the reactor')
 plt.legend()
 plt.show()
-
+"""
 chemin_fichier = "donnees.csv"
 with open(chemin_fichier, 'w', newline='') as fichier_csv:
     # Créer un objet writer CSV
@@ -179,3 +179,4 @@ with open(chemin_fichier, 'w', newline='') as fichier_csv:
     # Écrire chaque ligne dans le fichier CSV
     for valeur in pressure:
         writer.writerow([valeur])
+"""

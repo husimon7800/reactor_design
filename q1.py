@@ -61,6 +61,7 @@ concentrations = {
     'N2': [C_N20] + [0] * n_sections
 }
 
+conversion = [0] * (n_sections+1)
 
 # Définir le taux de réaction (rate_reaction)
 def rate_reaction(C_CO, C_H2O, C_CO2, C_H2, T):
@@ -101,7 +102,7 @@ for i in range(n_sections):
     concentrations['H2'][i + 1] = C_H2 + dC_H2
     concentrations['H2O'][i + 1] = C_H2O + dC_H2O
     concentrations['N2'][i + 1] = C_N2
-
+    conversion[i] = ((concentrations['CO'][0]-concentrations['CO'][i])/concentrations['CO'][0])
 
 
 # Afficher les concentrations des espèces en fonction de la longueur du réacteur
@@ -117,11 +118,17 @@ plt.ylabel('Concentration ($mol/m^3$)')
 plt.title('Concentrations of species along the reactor')
 plt.legend()
 plt.show()
-
+conversion[-1] = ((concentrations['CO'][0]-concentrations['CO'][-1])/concentrations['CO'][0])
 conversion_CO = ((concentrations['CO'][0]-concentrations['CO'][-1])/concentrations['CO'][0])
 print("Conversion rate of CO = ",conversion_CO*100,"%")
 print ("Void fraction = ",e_void*100,"%")
 
+plt.plot(longueur,conversion,label = 'CO conversion')
+plt.xlabel('Lenght of reactor (m)')
+plt.ylabel('CO conversion (-)')
+plt.title('Conversion of CO along the reactor')
+plt.legend()
+plt.show()
 #=======================================================
 #========== Second way to plot results of Q1 ===========
 #=======================================================
